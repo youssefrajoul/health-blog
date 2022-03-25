@@ -10,8 +10,19 @@ header {
     text-align: center;
 }
 
+.nav1 {
+    grid-area: nav1;
+}
+
+.nav2 {
+    grid-area: nav2;
+    
+}
+
 main {
     grid-area: main;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: large;
 }
 
 footer {
@@ -36,12 +47,13 @@ body {
     left: 50%;
     transform: translate(-50%);
     display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 8fr 1fr;
+    grid-template-columns: 1fr 5fr;
+    grid-template-rows: 1fr 1fr 8fr 1fr;
     grid-template-areas:
-     "header"
-     "main"
-     "footer"
+     "header header"
+     "nav1 nav2"
+     "nav1 main"
+     "footer footer"
     ;
 }
 
