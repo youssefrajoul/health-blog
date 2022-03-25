@@ -12,6 +12,7 @@ header {
 
 .nav1 {
     grid-area: nav1;
+
 }
 
 .nav2 {
@@ -75,4 +76,13 @@ img {
     width: 200px;
     height: 200px;
     border-radius: 10px;
+}
+
+.left-list {
+    list-style: none;
+    padding: 2em 1em 0 0;
+}
+
+.left-list > * {
+    margin-bottom: 2em;
 }
