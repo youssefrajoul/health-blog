@@ -29,9 +29,7 @@ footer {
 body {
     position: absolute;
     width: 768px;
-    box-sizing: border-box;
     padding: 0;
-    margin: 0;
     height: 100%;
     left: 50%;
     transform: translate(-50%);

@@ -16,7 +16,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
     integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
     crossorigin="anonymous"></script>
-
+  <script src="jquery/jquery-3.6.0.min.js"></script>
 
 </head>
 
@@ -37,22 +37,23 @@
         <a href="imc.html">L'IMC</a>
       </li>
       <li>
-        <a href="https://www.youtube.com/">Psycho et noix de coco</a>
+        <a href="">Psycho et noix de coco</a>
       </li>
       <li>
-        <a href="https://www.youtube.com/">Manger sainement</a>
+        <a href="">Manger sainement</a>
       </li>
     </ul>
   </nav>
   <nav class="nav2">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="imc-tab" data-bs-toggle="tab" data-bs-target="#imc" type="button"
-          role="tab" aria-controls="imc" aria-selected="true">Qu'est-ce ?</button>
+        <button class="nav-link active" id="imc-tab" data-bs-toggle="tab" data-bs-target="#imc" type="button" role="tab"
+          aria-controls="imc" aria-selected="true">Qu'est-ce ?</button>
       </li>
       <li class="nav-item" role="presentation">
-        <button class="nav-link" id="comment-calculer-tab" data-bs-toggle="tab" data-bs-target="#comment-calculer" type="button"
-          role="tab" aria-controls="comment-calculer" aria-selected="false">Comment calculer mon indice</button>
+        <button class="nav-link" id="comment-calculer-tab" data-bs-toggle="tab" data-bs-target="#comment-calculer"
+          type="button" role="tab" aria-controls="comment-calculer" aria-selected="false">Comment calculer mon
+          indice</button>
       </li>
       <li class="nav-item" role="presentation">
         <button class="nav-link" id="calculatrice-tab" data-bs-toggle="tab" data-bs-target="#calculatrice" type="button"
@@ -64,21 +65,41 @@
     <div class="tab-content" id="myTabContent">
       <div class="tab-pane fade show active" id="imc" role="tabpanel" aria-labelledby="imc-tab">
         <div class="imc">
-          <p>L’indice de masse corporelle ou IMC (en anglais, body mass index ou BMI) est une grandeur qui permet
-            d'estimer la corpulence d’une personne. Inventé au milieu du xixe siècle par Adolphe Quetelet,
-            mathématicien belge et l'un des fondateurs de la statistique moderne, cet indice est appelé aussi
-            l'indice de Quetelet.</p>
+          <h3>Qu'est-ce que l'IMC</h3>
+          <p>L’indice de masse corporelle ou IMC est un nombre permettant d'evaluer la situation de sur- ou sous-poids
+            d'une personne. L'OMS utilise l'IMC comme outil standard pour evaluer les risques lies au surpoids.
+          </p>
+        </div>
+        <div class="tableau">
+          <table class="table table-striped table-hover">
+            <p>Les intervalles de l'IMC sont les suivants:</p>
+            <thead>
+              <tr>
+                <th>IMC</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class="tableBody">
+
+            </tbody>
+          </table>
         </div>
         <div class="commentdiv">
+          <h3>Comment calculer l'IMC</h3>
           <p>
-            L'IMC se calcule en fonction de la taille et de la masse corporelle. Il a été conçu, au départ, pour les
-            adultes de 18 à 65 ans, mais de nouveaux diagrammes de croissance ont vu le jour au cours des dernières
-            décennies pour les enfants de 0 à 18 ans. Dans les deux cas, il constitue une indication et intervient
-            dans le calcul de l'indice de masse grasse (IMG).
+            L'IMC se calcule en fonction du poids en Kg et la taille en metres de la personne. La formule est P/T&sup2;.
+          </p>
+          <br>
+          <p>
+            Exemple : une personne mesurant 1,74 m pour un poids de 65,5 kg : son IMC est
+          </p>
+          <p>
+            IMC = 65,5/1,74&sup2; = 65,5/3,0276 = 21,6 (21,6 kg/m&sup2;)
           </p>
         </div>
       </div>
-      <div class="tab-pane fade" id="comment-calculer" role="tabpanel" aria-labelledby="comment-calculer-tab">59939</div>
+      <div class="tab-pane fade" id="comment-calculer" role="tabpanel" aria-labelledby="comment-calculer-tab">59939
+      </div>
       <div class="tab-pane fade" id="calculatrice" role="tabpanel" aria-labelledby="calculatrice-tab">
         <form>
           <div class="form-group">
@@ -120,7 +141,7 @@
       images © Copyright istock.com | pixabay.com
     </p>
   </footer>
-
+  <script src="javascript/js-imc.js"></script>
 </body>
 
 </html>
