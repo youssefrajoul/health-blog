@@ -45,6 +45,7 @@ body {
     left: 50%;
     transform: translate(-50%);
     display: grid;
+    grid-gap: 10px;
     grid-template-columns: 1fr 5fr;
     grid-template-rows: 1fr 1fr 8fr 1fr;
     grid-template-areas:
@@ -86,4 +87,12 @@ img {
 
 .tableau {
     width: 420px;
+}
+
+.tableau2 {
+    width: 420px;
+}
+
+.testb {
+    background-color: aqua;
 }
