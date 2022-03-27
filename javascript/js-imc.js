@@ -6,5 +6,10 @@ $(function() {
         $(".tableBody").append($("<tr>"));
         $(".tableBody tr:last-child").append($("<td>").text(intervalles[i]));
         $(".tableBody tr:last-child").append($("<td>").text(description[i]));
-    }
+    };
+    $("#calcul").on("click", function() {
+        const taille = $("#taille").val()/100;
+        const poids = $("#poids").val();
+        alert(`votre taille est : ${taille} m`);
+    });
 });
