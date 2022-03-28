@@ -82,7 +82,9 @@ function tabImcDescription() {
     };
 }
 
-
+/**
+ * This function get all data from Browser's local storage
+ */
 function allStorage() {
 
     let values = [],
@@ -119,6 +121,9 @@ $(function () {
     //First table (IMC/Description)
     tabImcDescription();
 
+    /**
+     * this function treat the calcul button behavior
+     */
     $("#calcul").on("click", function () {
         //those two instructions remove the second table (Poids/descirpton) if alreaady exist
         $(".enteteTab2").remove();
@@ -156,6 +161,9 @@ $(function () {
             
         }
     });
+    /**
+     * this function treat the hitorique button behavior
+     */
     $("#historique-button").on("click", function () {
         
         $("#historique > *").remove();
