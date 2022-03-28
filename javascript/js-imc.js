@@ -1,5 +1,5 @@
 /**
- * Tableaux de donnees
+ * Tableaux de donnees global
  * tabImc
  * intervallesImc
  * escription
@@ -10,6 +10,11 @@ let intervallesImc = ["moins de 16.5", "16,5 a 18,5", "18,5 a 25", "25 a 30", "3
 let description = ["denutrition", "maigreur", "poids normal", "surpoids", "obesite modree", "obesite severe", "obesite morbide ou massive"]
 let intervallesPoids = ["moins de 47", "47 a 53", "53 a 72", "72 a 86", "86 a 101", "101 a 115", "115 et plus"];
 
+/**
+ * this function use description[]Array to give the user a description of his IMC
+ * @param {*} imcUser 
+ * @returns resultat is a description of the user's IMC
+ */
 function imcDescription(imcUser) {
     let resultat = "obesite morbide ou massive";
     for (let i = 0; i < tabImc.length; i++) {
@@ -21,6 +26,12 @@ function imcDescription(imcUser) {
     return resultat;
 }
 
+/**
+ * this function calculate the IMC of the user
+ * @param {*} p the first parameter is the the weight of the user
+ * @param {*} t the second parameter is the height of the user
+ * @returns IMC the body mass index
+ */
 function calculerImc(p, t) {
     /**
      * Rounding imc to 1 digit after comma.
@@ -32,6 +43,9 @@ function calculerImc(p, t) {
     return imc;
 }
 
+/**
+ * this function creates(in html) the Second Table with Poids and Description
+ */
 function tabDynamique() {
     for (let i = 0; i < intervallesImc.length; i++) {
         $(".tableBody2").append($("<tr>"));
@@ -40,41 +54,107 @@ function tabDynamique() {
     };
 }
 
+/**
+ * 
+ * @param {*} imcEvidence is the IMC of the user
+ * @returns the position of the IMC among the table
+ */
 function tabEvidence(imcEvidence) {
-    let indiceChild = tabImc.length;
+    let indiceCategorie = tabImc.length;
     for (let i = 0; i < tabImc.length; i++) {
         if (imcEvidence < tabImc[i]) {
-            indiceChild = i;
+            indiceCategorie = i;
             i = tabImc.length;
         }
     }
 
-    return indiceChild + 1;
+    return indiceCategorie + 1;
 }
 
-$(function () {
+/**
+ * this function creates(in html) the First Table with IMC and Description
+ */
+function tabImcDescription() {
     for (let i = 0; i < intervallesImc.length; i++) {
         $(".tableBody").append($("<tr>"));
         $(".tableBody tr:last-child").append($("<td>").text(intervallesImc[i]));
         $(".tableBody tr:last-child").append($("<td>").text(description[i]));
     };
+}
+
+
+function allStorage() {
+
+    let values = [],
+        keys = Object.keys(localStorage),
+        i = keys.length;
+
+    while (i--) {
+        values.push(localStorage.getItem(keys[i]));
+    }
+    for(let i = 0 ; i < keys.length ; i++) {
+        $("#historique").append($("<p>").text((i+1)+" / " + values[i]));
+    }
+}
+
+//instructions to get date
+let date = new Date();
+let month = date.getMonth() + 1
+let time = date.getDate() + "/" + month + "/" + date.getFullYear();
+
+let values = [],
+    keys = Object.keys(localStorage),
+    i = keys.length;
+
+/**
+ * Jquery Document ready function
+ */
+$(function () {
+    //First table (IMC/Description)
+    tabImcDescription();
 
     $("#calcul").on("click", function () {
+        //those two instructions remove the second table (Poids/descirpton) if alreaady exist
         $(".enteteTab2").remove();
         $(".tableBody2 > *").remove();
 
+        
+
+        //instructions to get user's taille end poids
         let taille = $("#taille").val() / 100;
         let poids = $("#poids").val();
 
         // alert(`votre taille est : ${taille} m`);
+
+        //calculate user's IMC/BMI
         let imc = calculerImc(taille, poids);
 
+        i++;
         // if condition to make user set a reasonable value
         if (taille > 0.2 && poids > 5) {
+            //this instruction generate the head of the second table (poids/description)
             $(".tableBody2").before(("<thead class=" + "enteteTab2" + "><tr><th>Poids</th><th>Description</th></tr></thead>"));
+
+            //this instruction generate the paragraph in calculatrice tab
             $(".afficheImc").text(`Avec votre taille (${taille}m)  et votre poide (${poids})kg, votre IMC est de ${imc} et est considere comme ${imcDescription(imc)}`);
+
+            //Second table (poids/Description)
             tabDynamique();
-            $(`.tableBody2 tr:nth-child(${tabEvidence(imc)})`).addClass("testb").delay(800);
+
+            //change background color of the table row using a Css class
+            $(`.tableBody2 tr:nth-child(${tabEvidence(imc)})`).addClass("categorie-en-evidence").delay(800);
+
+            localStorage.setItem('IMC/BMI ' + i, "IMC: " + imc + " | Date: " + time);
+
+
+            
         }
     });
+    $("#historique-button").on("click", function () {
+        
+        $("#historique > *").remove();
+        
+        allStorage().delay(800);
+    });
+
 });
