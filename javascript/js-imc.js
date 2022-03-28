@@ -11,7 +11,7 @@ let description = ["denutrition", "maigreur", "poids normal", "surpoids", "obesi
 let intervallesPoids = ["moins de 47", "47 a 53", "53 a 72", "72 a 86", "86 a 101", "101 a 115", "115 et plus"];
 
 /**
- * this function use description[]Array to give the user a description of his IMC
+ * this function use description[]Array to give the user a description of his/her IMC
  * @param {*} imcUser 
  * @returns resultat is a description of the user's IMC
  */
@@ -44,7 +44,7 @@ function calculerImc(p, t) {
 }
 
 /**
- * this function creates(in html) the Second Table with Poids and Description
+ * this function creates 'in html' the Second Table with Poids and Description
  */
 function tabDynamique() {
     for (let i = 0; i < intervallesImc.length; i++) {
@@ -72,7 +72,7 @@ function tabEvidence(imcEvidence) {
 }
 
 /**
- * this function creates(in html) the First Table with IMC and Description
+ * this function creates 'in html' the First Table with IMC and Description
  */
 function tabImcDescription() {
     for (let i = 0; i < intervallesImc.length; i++) {
@@ -83,7 +83,7 @@ function tabImcDescription() {
 }
 
 /**
- * This function get all data from Browser's local storage
+ * This function get all data from Browser's local storage and show it in html
  */
 function allStorage() {
 
@@ -94,20 +94,28 @@ function allStorage() {
     while (i--) {
         values.push(localStorage.getItem(keys[i]));
     }
-    for(let i = 0 ; i < keys.length ; i++) {
-        $("#historique").append($("<p>").text((i+1)+" / " + values[i]));
+    for (let i = 0; i < keys.length; i++) {
+        $("#historique").append($("<p>").text((i + 1)+ " / "+ keys[i] + " / " + values[i]));
     }
 }
 
-//instructions to get date
-let date = new Date();
-var year = date.getFullYear();
-var day = date.getDate();
-let month = date.getMonth() + 1
-let seconds = date.getSeconds();
-let minutes = date.getMinutes();
-let hour = date.getHours();
-let time = day + "/" + month + "/" + year + " | " + hour + ":" + minutes + ":" + seconds;
+/**
+ * function to get date
+ * @returns time 
+ */
+function time() {
+    let date = new Date();
+    let year = date.getFullYear();
+    let day = date.getDate();
+    let month = date.getMonth() + 1
+    let seconds = date.getSeconds();
+    let minutes = date.getMinutes();
+    let hour = date.getHours();
+    let time = day + "/" + month + "/" + year + " | " + hour + ":" + minutes + ":" + seconds;
+    return time;
+}
+
+
 
 //instructions to set i equal to localStorage,length
 let values = [],
@@ -122,14 +130,12 @@ $(function () {
     tabImcDescription();
 
     /**
-     * this function treat the calcul button behavior
+     * this function treats the 'calcul & enregistrer' buttons behavior
      */
     $("#calcul").on("click", function () {
         //those two instructions remove the second table (Poids/descirpton) if alreaady exist
         $(".enteteTab2").remove();
         $(".tableBody2 > *").remove();
-
-        
 
         //instructions to get user's taille end poids
         let taille = $("#taille").val() / 100;
@@ -140,35 +146,68 @@ $(function () {
         //calculate user's IMC/BMI
         let imc = calculerImc(taille, poids);
 
-        i++;
         // if condition to make user set a reasonable value
         if (taille > 0.2 && poids > 5) {
+
             //this instruction generate the head of the second table (poids/description)
             $(".tableBody2").before(("<thead class=" + "enteteTab2" + "><tr><th>Poids</th><th>Description</th></tr></thead>"));
 
             //this instruction generate the paragraph in calculatrice tab
             $(".afficheImc").text(`Avec votre taille (${taille}m)  et votre poide (${poids})kg, votre IMC est de ${imc} et est considere comme ${imcDescription(imc)}`);
 
-            //Second table (poids/Description)
+            //Show the Second table (poids/Description)
             tabDynamique();
 
+            //enregistrer button to save calcul result in the Browser LocalStorage
+            $("#enregistrer-button").on("click", function () {
+                i++;
+                localStorage.setItem('IMC ' + i, "Date: " + time() + " / IMC: " + imc);
+            });
             //change background color of the table row using a Css class
             $(`.tableBody2 tr:nth-child(${tabEvidence(imc)})`).addClass("categorie-en-evidence").delay(800);
-
-            localStorage.setItem('IMC ' + i,  "Date: " + time + " / IMC: " + imc);
-
-
-            
-        }
+        };
     });
     /**
-     * this function treat the hitorique button behavior
+     * this function treat the 'historique & supprimer-tout' button behavior
      */
     $("#historique-button").on("click", function () {
-        
-        $("#historique > *").remove();
-        
-        allStorage().delay(800);
-    });
 
+        //if else statment: to test if history is alrady shown
+        if ($(this).attr('data-click-state') == 1) {
+            // Set data-click-state attribute to 0
+            $(this).attr('data-click-state', 0);
+
+            //instruction to remove history from the web page if already existed
+            $("#historique > *").remove();
+            $("#supprimer-tout").remove();
+
+            //generate supprimer-tout button with localStorage if data exist in local.Storage
+            if (localStorage.length > 0) {
+                $("#historique").before(`<button id="supprimer-tout" type="button" class="btn btn-outline-primary">supprimer-tout</button>`);
+            }
+
+            // supprimer-tout button behavior
+            $("#supprimer-tout").on("click", function () {
+                //clear local storage
+                if (localStorage.length > 0) {
+                    localStorage.clear();
+                }
+                
+                //to remove history from web
+                $("#historique > *").remove();
+                $("#supprimer-tout").remove();
+
+                // Make historique-button ready to for user click
+                $("#historique-button").attr('data-click-state', 1);
+            });
+            //show Local.Storage data
+            allStorage().delay(800);
+        }
+        else {
+            $(this).attr('data-click-state', 1);
+            //instruction to remove history from the web page
+            $("#historique > *").remove();
+            $("#supprimer-tout").remove();
+        }
+    });
 });
