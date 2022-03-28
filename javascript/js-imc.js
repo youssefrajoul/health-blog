@@ -99,9 +99,15 @@ function allStorage() {
 
 //instructions to get date
 let date = new Date();
+var year = date.getFullYear();
+var day = date.getDate();
 let month = date.getMonth() + 1
-let time = date.getDate() + "/" + month + "/" + date.getFullYear();
+let seconds = date.getSeconds();
+let minutes = date.getMinutes();
+let hour = date.getHours();
+let time = day + "/" + month + "/" + year + " | " + hour + ":" + minutes + ":" + seconds;
 
+//instructions to set i equal to localStorage,length
 let values = [],
     keys = Object.keys(localStorage),
     i = keys.length;
@@ -144,7 +150,7 @@ $(function () {
             //change background color of the table row using a Css class
             $(`.tableBody2 tr:nth-child(${tabEvidence(imc)})`).addClass("categorie-en-evidence").delay(800);
 
-            localStorage.setItem('IMC/BMI ' + i, "IMC: " + imc + " | Date: " + time);
+            localStorage.setItem('IMC ' + i,  "Date: " + time + " / IMC: " + imc);
 
 
             
