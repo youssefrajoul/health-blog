@@ -128,7 +128,6 @@ $(function () {
         $(".afficheImc-paragraph").text(`Avec votre taille (${taille}m)  et votre poide (${poids})kg, votre IMC est de ${imc} et est considere comme ${imcDescription(imc)}. Avec votre taille, voici votre categorie d'IMC en fonction de votre poids:`);
         afficherTableau(2, tabIntervallesPoids, imc);
     });
-
     $("#enregistrer-button").on("click", function () {
         let taille = $("#taille").val() / 100;
         let poids = $("#poids").val();
