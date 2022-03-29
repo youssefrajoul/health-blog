@@ -60,6 +60,7 @@ function tabDynamique() {
  * @returns the position of the IMC among the table
  */
 function tabEvidence(imcEvidence) {
+    // declare and set the last element of the table "tabImc"
     let indiceCategorie = tabImc.length;
     for (let i = 0; i < tabImc.length; i++) {
         if (imcEvidence < tabImc[i]) {
@@ -67,7 +68,6 @@ function tabEvidence(imcEvidence) {
             i = tabImc.length;
         }
     }
-
     return indiceCategorie + 1;
 }
 
@@ -88,11 +88,10 @@ function tabImcDescription() {
 function allStorage() {
 
     let values = [],
-        keys = Object.keys(localStorage),
-        i = keys.length;
+        keys = Object.keys(localStorage);
 
-    while (i--) {
-        values.push(localStorage.getItem(keys[i]));
+    for(let i = 0 ; i < keys.length ; i++) {
+        values[i] = (localStorage.getItem(keys[i]));
     }
     for (let i = 0; i < keys.length; i++) {
         $("#historique").append($("<p>").text((i + 1)+ " / "+ keys[i] + " / " + values[i]));
@@ -150,7 +149,7 @@ $(function () {
         if (taille > 0.2 && poids > 5) {
 
             //this instruction generate the head of the second table (poids/description)
-            $(".tableBody2").before(("<thead class=" + "enteteTab2" + "><tr><th>Poids</th><th>Description</th></tr></thead>"));
+            $(".tableBody2").before((`<thead class="enteteTab2"><tr><th>Poids</th><th>Description</th></tr></thead>`));
 
             //this instruction generate the paragraph in calculatrice tab
             $(".afficheImc").text(`Avec votre taille (${taille}m)  et votre poide (${poids})kg, votre IMC est de ${imc} et est considere comme ${imcDescription(imc)}`);
@@ -162,9 +161,11 @@ $(function () {
             $("#enregistrer-button").on("click", function () {
                 i++;
                 localStorage.setItem('IMC ' + i, "Date: " + time() + " / IMC: " + imc);
+                $("#calcul").hide();
+                
             });
-            //change background color of the table row using a Css class
-            $(`.tableBody2 tr:nth-child(${tabEvidence(imc)})`).addClass("categorie-en-evidence").delay(800);
+            //change background color of the table row using a Css class with 800ms of latency
+            $(`.tableBody2 tr:nth-child(${tabEvidence(imc)})`).addClass("categorie-en-evidence");
         };
     });
     /**
@@ -181,6 +182,9 @@ $(function () {
             $("#historique > *").remove();
             $("#supprimer-tout").remove();
 
+            if(localStorage.length <= 0) {
+                alert("Aucun Historique");
+            };
             //generate supprimer-tout button with localStorage if data exist in local.Storage
             if (localStorage.length > 0) {
                 $("#historique").before(`<button id="supprimer-tout" type="button" class="btn btn-outline-primary">supprimer-tout</button>`);
