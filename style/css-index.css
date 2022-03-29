@@ -3,7 +3,7 @@ header {
     grid-area: header;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     background-color: rgb(244, 243, 238);
-    border-radius: 0 010px 10px;
+    border-radius: 0px 0px 10px 10px;
     display: flex;
     justify-content: center;
     align-items: center;
