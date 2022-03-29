@@ -38,7 +38,9 @@ function calculerImc(p, t) {
  * @param {*} colonne1DuTableau data of the first column "IMC ou Poids"
  */
 function afficherTableau(quelTableau, colonne1DuTableau, imc) {
-
+    if(quelTableau === 2) {
+        $(".thead-tableau2").show();
+    };
     for (let i = 1; i <= tabDescription.length; i++) {
         if (i === 1) {
             $(`.tableBody${quelTableau}`).append($("<tr>"));
@@ -109,6 +111,7 @@ keys = Object.keys(localStorage);
 i = keys.length;
 
 $(function () {
+    $(".thead-tableau2").hide();
     afficherTableau(1, tabImc);
     $("#calcul").on("click", function () {
         $(this).attr('data-click-state', 1);
