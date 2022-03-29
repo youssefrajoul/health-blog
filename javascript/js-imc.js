@@ -50,9 +50,9 @@ function afficherTableau(quelTableau, colonne1DuTableau, imc) {
             $(`.tableBody${quelTableau} tr:last-child`).append($("<td>").text(`${tabDescription[i - 1]}`));
         } else {
             $(`.tableBody${quelTableau}`).append($("<tr>"));
-            $(`.tableBody${quelTableau} tr:last-child`).append($("<td>").text(`${colonne1DuTableau[i - 2]} a ${colonne1DuTableau[i - 1]}`));
+            $(`.tableBody${quelTableau} tr:last-child`).append($("<td>").text(`${colonne1DuTableau[i - 2]} à ${colonne1DuTableau[i - 1]}`));
             $(`.tableBody${quelTableau} tr:last-child`).append($("<td>").text(tabDescription[i - 1]));
-        }
+        };
     }
     $(`.tableBody2 tr:nth-child(${tabEvidence(imc)})`).addClass("categorie-en-evidence");
 }
@@ -100,13 +100,7 @@ function getAllStorage() {
  */
 function time() {
     let date = new Date();
-    let year = date.getFullYear();
-    let day = date.getDate();
-    let month = (date.getMonth() + 1);
-    let seconds = date.getSeconds();
-    let minutes = date.getMinutes();
-    let hour = date.getHours();
-    let time = day + "/" + month + "/" + year + " | " + hour + ":" + minutes + ":" + seconds;
+    let time = (date.getDate()) + "/" + (date.getMonth() + 1) + "/" + (date.getFullYear()) + " | " + (date.getHours()) + ":" + (date.getMinutes()) + ":" + (date.getSeconds());
     return time;
 }
 
@@ -115,10 +109,9 @@ keys = Object.keys(localStorage);
 i = keys.length;
 
 $(function () {
-
     afficherTableau(1, tabImc);
-
     $("#calcul").on("click", function () {
+        $(this).attr('data-click-state', 1);
         $(".enteteTab2").remove();
         $(".tableBody2 > *").remove();
         let taille = $("#taille").val() / 100;
@@ -128,28 +121,36 @@ $(function () {
         $(".afficheImc-paragraph").text(`Avec votre taille (${taille}m)  et votre poide (${poids})kg, votre IMC est de ${imc} et est considere comme ${imcDescription(imc)}. Avec votre taille, voici votre categorie d'IMC en fonction de votre poids:`);
         afficherTableau(2, tabIntervallesPoids, imc);
     });
+
     $("#enregistrer-button").on("click", function () {
-        let taille = $("#taille").val() / 100;
-        let poids = $("#poids").val();
-        let imc = calculerImc(taille, poids);
-        //increment local storage key position
-        i++;
-        localStorage.setItem(`IMC ${i}`, `Date: ${time()} / IMC: ${imc}`);
+        if ($("#calcul").attr('data-click-state') == 1) {
+            let taille = $("#taille").val() / 100;
+            let poids = $("#poids").val();
+            let imc = calculerImc(taille, poids);
+            //increment local storage key position
+            i++;
+            if (imc > 0) {
+                localStorage.setItem(`IMC ${i}`, `Date: ${time()} / IMC: ${imc}`);
+                alert(`IMC: ${imc} enregistré`);
+            };
+        };
+
     });
     $("#historique-button").on("click", function () {
+
+
         if ($(this).attr('data-click-state') == 0) {
             // Make historique-button ready to for user click
             $(this).attr('data-click-state', 1);
             $("#list-historique > *").remove();
             $("#supprimer-tout").remove();
-            getAllStorage().delay(800);
             if (localStorage.length <= 0) {
                 alert("Aucun Historique");
                 $("#historique-button").attr('data-click-state', 0);
             };
             if (localStorage.length > 0) {
                 $("#list-historique").before(`<button id="supprimer-tout" type="button" class="btn btn-outline-primary">supprimer-tout</button>`);
-            }
+            };
             $("#supprimer-tout").on("click", function () {
                 if (localStorage.length > 0) {
                     localStorage.clear();
@@ -160,11 +161,12 @@ $(function () {
                 // Make historique-button ready to for user click
                 $("#historique-button").attr('data-click-state', 1);
             });
+            getAllStorage().delay(800);
         }
         else {
             $(this).attr('data-click-state', 0);
             $("#list-historique > *").remove();
             $("#supprimer-tout").remove();
-        }
+        };
     });
 });
