@@ -12,11 +12,17 @@ header {
 
 main {
     grid-area: main;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.nav1 {
+    grid-area: nav1;
+
 }
 
 footer {
     position: relative;
-    bottom: 0;
+    top: 100%;
     grid-area: footer;
     background-color: rgb(244, 243, 238);
     display: flex;
@@ -31,35 +37,33 @@ body {
     width: 768px;
     height: 100%;
     padding: 0;
+    margin: 0;
     left: 50%;
     transform: translate(-50%);
     display: grid;
     grid-gap: 10px;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 5fr;
     grid-template-rows: 1fr 8fr 1fr;
     grid-template-areas:
-     "header"
-     "main"
-     "footer"
+     "header header"
+     "nav1 main"
+     "footer footer"
     ;
 }
 
-.images {
-    display: flex;
-    justify-content: space-around;
+.left-list {
+    list-style: none;
+    padding: 2em 1em 0 0;
 }
 
-.img1, .img2, .img3 {
-    border: 2px solid rgb(189, 187, 187);
-    border-radius: 10px;
-    padding: 5px;
-    max-width: 220px;
-    text-align: center;
-    overflow-wrap: break-word;
+.left-list > * {
+    margin-bottom: 2em;
 }
 
 img {
-    width: 200px;
+    display: flex;
+    margin: auto;
     height: 200px;
-    border-radius: 10px;
+    width: 300px;
+    border: 5px solid black;
 }
