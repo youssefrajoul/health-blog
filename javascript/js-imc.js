@@ -34,18 +34,23 @@ function calculerImc(p, t) {
 
 /**
  * this function shows all the tables
- * @param {*} quelTableau 1 fo the first & 2 for the dynamic table
+ * @param {*} quelTableau 1 for the first & 2 for the dynamic table
  * @param {*} colonne1DuTableau data of the first column "IMC ou Poids"
  */
 function afficherTableau(quelTableau, colonne1DuTableau, imc) {
     if(quelTableau === 2) {
         $(".thead-tableau2").show();
     };
-    for (let i = 1; i <= tabDescription.length; i++) {
+    for (let i = 1; i <= tabDescription.length; i++) { 
+        const line = $("<tr>");
         if (i === 1) {
-            $(`.tableBody${quelTableau}`).append($("<tr>"));
-            $(`.tableBody${quelTableau} tr:last-child`).append($("<td>").text(`moins de ${colonne1DuTableau[i - 1]}`));
-            $(`.tableBody${quelTableau} tr:last-child`).append($("<td>").text(tabDescription[i - 1]));
+            line
+                .append($("<td>")
+                    .text(`moins de ${colonne1DuTableau[i - 1]}`))
+                .append($("<td>")
+                    .text(tabDescription[i - 1]));
+            $(`.tableBody${quelTableau}`)
+                .append(line);
         } else if (i === tabDescription.length) {
             $(`.tableBody${quelTableau}`).append($("<tr>"));
             $(`.tableBody${quelTableau} tr:last-child`).append($("<td>").text(`${colonne1DuTableau[i - 2]}  et plus`));
