@@ -52,13 +52,17 @@ function afficherTableau(quelTableau, colonne1DuTableau, imc) {
             $(`.tableBody${quelTableau}`)
                 .append(line);
         } else if (i === tabDescription.length) {
-            $(`.tableBody${quelTableau}`).append($("<tr>"));
-            $(`.tableBody${quelTableau} tr:last-child`).append($("<td>").text(`${colonne1DuTableau[i - 2]}  et plus`));
-            $(`.tableBody${quelTableau} tr:last-child`).append($("<td>").text(`${tabDescription[i - 1]}`));
+            line
+                .append($("<td>").text(`${colonne1DuTableau[i - 2]}  et plus`))
+                .append($("<td>").text(`${tabDescription[i - 1]}`));
+            $(`.tableBody${quelTableau}`)
+                .append(line);
         } else {
-            $(`.tableBody${quelTableau}`).append($("<tr>"));
-            $(`.tableBody${quelTableau} tr:last-child`).append($("<td>").text(`${colonne1DuTableau[i - 2]} à ${colonne1DuTableau[i - 1]}`));
-            $(`.tableBody${quelTableau} tr:last-child`).append($("<td>").text(tabDescription[i - 1]));
+            line
+                .append($("<td>").text(`${colonne1DuTableau[i - 2]} à ${colonne1DuTableau[i - 1]}`))
+                .append($("<td>").text(tabDescription[i - 1]));
+            $(`.tableBody${quelTableau}`)
+                .append(line);
         };
     }
     $(`.tableBody2 tr:nth-child(${tabEvidence(imc)})`).addClass("categorie-en-evidence");
